@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Papaji</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background: linear-gradient(to bottom, #f3f4f6, #dbe8f1);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 50px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        h2 {
+            font-size: 24px;
+            color: #34495e;
+            margin-bottom: 40px;
+            animation: fadeIn 2s ease-in-out 1s;
+        }
+        .balloon-container {
+            position: relative;
+            width: 250px;
+            height: 350px;
+        }
+        .balloon {
+            width: 200px;
+            height: 250px;
+            background: radial-gradient(circle at top, #4caf50, #2e7d32);
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            animation: float 5s ease-in-out infinite;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease-in-out;
+        }
+        .string {
+            position: absolute;
+            bottom: -5px;
+            left: 40%;
+            transform-origin: top;
+            width: 4px;
+            height: 140px;
+            background: linear-gradient(to bottom, #4b4b4b, #2c2c2c);
+            border-radius: 2px;
+            animation: stringPhysics 5s ease-in-out infinite;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        @keyframes float {
+            0% { transform: translate(5px, 0); }
+            25% { transform: translate(-5px, -10px); }
+            50% { transform: translate(0px, -15px); }
+            75% { transform: translate(5px, -10px); }
+            100% { transform: translate(-5px, 0); }
+        }
+        @keyframes stringPhysics {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-3deg); }
+            50% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+            100% { transform: rotate(0deg); }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes pop {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        .photo-message {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .photo-message img {
+            width: 300px;
+            height: 250px;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            margin-top:-1000px ;
+            
+        }
+        .photo-message p {
+            font-size: 20px;
+            color: #2c3e50;
+            margin: 0 auto;
+            width: 80%;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInText 1.5s ease-in-out 0.5s forwards;
+            display: block;
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media (max-width: 768px) {
+            .photo-message p {
+                font-size: 16px;
+                width: 90%;
+            }
+        }
+        @media (max-width: 480px) {
+            .photo-message p {
+                font-size: 14px;
+                width: 95%;
+            }
+        }
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .confetti span {
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background: #ffc107;
+            opacity: 0.7;
+            animation: fall 4s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100%) rotate(0); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Birthday Papaji! 🎈</h1>
+    <h2 id="instruction">Click the balloon to reveal a surprise! 🎁</h2>
+
+    <div class="balloon-container">
+        <div class="balloon" onclick="popBalloon()">🎈</div>
+        <div class="string"></div>
+    </div>
+
+    <div id="message" class="photo-message">
+        <img src="./WhatsApp Image 2024-11-17 at 12.37.14_9c84bcee.jpg" alt="Special Memory">
+        <p>“Wishing you the happiest birthday, Papaji! You’re the best. I’m very grateful to have you. Thank you for everything!”</p>
+    </div>
+
+    <div class="confetti" id="confetti"></div>
+
+    <script>
+        function popBalloon() {
+            const balloon = document.querySelector('.balloon');
+            const string = document.querySelector('.string');
+            const instruction = document.getElementById('instruction');
+            const message = document.getElementById('message');
+            const confetti = document.getElementById('confetti');
+
+            // Add pop animation to the balloon
+            balloon.style.animation = 'pop 0.4s ease-in-out forwards';
+
+            // Remove the balloon and string after the animation
+            setTimeout(() => {
+                balloon.style.display = 'none';
+                string.style.display = 'none';
+                instruction.style.display = 'none';
+
+                // Show the message and trigger fade-in text
+                message.style.display = 'block';
+
+                // Add confetti effect
+                for (let i = 0; i < 100; i++) {
+                    const span = document.createElement('span');
+                    span.style.left = Math.random() * 100 + 'vw';
+                    span.style.animationDelay = Math.random() * 2 + 's';
+                    confetti.appendChild(span);
+                }
+            }, 400); // Match with the pop animation duration
+        }
+    </script>
+</body>
+</html>
